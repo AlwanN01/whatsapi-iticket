@@ -35,6 +35,7 @@
     "#model": "./src/config/model",
     "#db": "./src/config/database/mysql.js",
     "#control": "./src/controller",
-    "#middleware/*": "./src/middleware/*"
+    "#middleware/*": "./src/middleware/*",
+    "#wa/*": "./src/whatsapp/*"
   }
 }

@@ -1,9 +1,9 @@
 import { mahasiswa, jurusan } from '#model'
-import { replace, formatFromWANo } from './helper'
+import { replace, formatFromWANo } from '#wa/helper/index'
 const messageCreate = async msg => {
   try {
     if (msg.fromMe) {
-      const { default: client } = await import('./config/client')
+      const { default: client } = await import('#wa/config/client')
       if (msg.body.startsWith('!id ')) {
         const nim = msg.body.split(' ')[1]
         const data = await mahasiswa.findOne({

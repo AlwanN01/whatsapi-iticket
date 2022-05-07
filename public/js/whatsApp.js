@@ -7,6 +7,14 @@ socket.on('message', data => {
 })
 
 socket.on('qr', data => {
-  console.log(data)
   qr.src = data
 })
+
+socket.on('ready', () => {
+  console.log('ready')
+  qr.style.display = 'none'
+})
+//socket emmit click event
+// document.querySelector('#logout').addEventListener('click', () => {
+//   socket.emit('logout')
+// })
