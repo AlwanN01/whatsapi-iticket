@@ -1,6 +1,6 @@
 import WA from 'whatsapp-web.js'
 const { Client, LocalAuth } = WA
-const client = new Client({
+const option = {
   puppeteer: {
     headless: true,
     args: [
@@ -15,5 +15,6 @@ const client = new Client({
     ]
   },
   authStrategy: new LocalAuth()
-})
-export default client
+}
+export const client = new Client(option)
+export const client2 = new Client(option)

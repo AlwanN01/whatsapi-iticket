@@ -12,3 +12,8 @@ body {
   flex-direction: column;
   align-items: center;
 }
+#notif{
+  font-size: xx-large;
+  margin-top: 50px;
+  white-space: pre;
+}

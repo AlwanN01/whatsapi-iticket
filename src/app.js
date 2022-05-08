@@ -5,9 +5,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import swaggerUI from 'swagger-ui-express'
 import swaggerDocument from '../apidocs.json'
-import path from 'path'
-// import helmet from 'helmet'
-const __dirname = path.resolve()
+
 const app = express()
 app.use(cors())
 app.use(morgan('dev')) // menggunakan morgan untuk menampilkan log

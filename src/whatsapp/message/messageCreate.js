@@ -1,9 +1,8 @@
 import { mahasiswa, jurusan } from '#model'
-import { replace, formatFromWANo } from '#wa/helper/index'
-const messageCreate = async msg => {
+import { replace, formatFromWANo } from '#wa/helper'
+const messageCreate = async (msg, socket, client) => {
   try {
     if (msg.fromMe) {
-      const { default: client } = await import('#wa/config/client')
       if (msg.body.startsWith('!id ')) {
         const nim = msg.body.split(' ')[1]
         const data = await mahasiswa.findOne({
@@ -19,17 +18,19 @@ const messageCreate = async msg => {
           }
         })
         if (data) {
-          client.sendMessage(
-            msg.to,
-            replace(`
-            *Data Mahasiswa yang temukan:*
-            id: ${data.nim}
-            nama: ${data.nama}
-            jurusan: ${data.jurusan.nama_jurusan}
-            `)
-          )
+          const message = `
+          *Data Mahasiswa yang temukan:*
+          id: ${data.nim}
+          nama: ${data.nama}
+          jurusan: ${data.jurusan.nama_jurusan}
+          `
+          socket.emit('notif', replace(message)) //jika emit setelah send = error
+          client.sendMessage(msg.to, replace(message))
+
+          //push puppeteer notification in browser
         } else {
-          client.sendMessage(msg.to, `data not found`)
+          socket.emit('notif', replace(` *Data Tidak Ditemukan* `)) //jika emit setelah send = error
+          client.sendMessage(msg.to, ` *Data Tidak Ditemukan* `)
         }
       }
       msg.body === '!no' && client.sendMessage(msg.to, `your number is ${formatFromWANo(msg.to)}`)

@@ -1,3 +1,5 @@
+// import client from '#wa/config/client'
+
 import { toDataURL } from 'qrcode'
 let msg = 'Client Connected...'
 let barcode = ''
@@ -19,6 +21,7 @@ const messageAuth = (socket, client) => {
   client.on('ready', () => {
     console.log('Client is ready!')
     msg = 'Client is ready!'
+    barcode = ''
     socket.emit('ready')
     socket.emit('message', msg)
   })
