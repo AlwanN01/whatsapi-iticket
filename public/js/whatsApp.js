@@ -3,9 +3,10 @@ const msg = document.querySelector('#msg')
 const qr = document.querySelector('#qr')
 const notif = document.querySelector('#notif')
 const audio = new Audio('../sound/notif.wav')
-
-audio.play()
-
+new Notification('ITICKET Notifiation', {
+  icon: 'http://localhost:3000/image/Cap.png',
+  body: "Hi`, I'm ITICKET"
+})
 // if (resp !== undefined) {
 //   resp
 //     .then(_ => {
@@ -33,9 +34,10 @@ socket.on('ready', () => {
   console.log('ready')
 })
 socket.on('notif', data => {
-  const notification = new Notification('ITICKET Notifiation', {
+  let notifBody = data
+  new Notification('ITICKET Notifiation', {
     icon: 'http://localhost:3000/image/Cap.png',
-    body: 'tes'
+    body: notifBody
   })
 
   const title = data.split('*')[1]
