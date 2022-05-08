@@ -1,59 +1,24 @@
-let socket = io()
-const msg = document.querySelector('#msg')
-const qr = document.querySelector('#qr')
-const notif = document.querySelector('#notif')
-const audio = new Audio('../sound/notif.wav')
-new Notification('ITICKET Notifiation', {
-  icon: 'http://localhost:3000/image/Cap.png',
-  body: "Hi`, I'm ITICKET"
-})
-// if (resp !== undefined) {
-//   resp
-//     .then(_ => {
-//       // autoplay starts!
-//     })
-//     .catch(error => {
-//       //show error
-//     })
-// }
-socket.on('init', () => {
-  msg.innerHTML = 'Client Connected...'
-})
-socket.on('message', data => {
-  msg.innerHTML = data
-})
+import * as sokContr from './controller/socket.js'
+const socket = io()
+/** @type {HTMLElement} */
+const formInput = document.querySelector('.form-input')
+const number = document.querySelector('#number')
+socket.on('init', sokContr.init)
+socket.on('message', sokContr.message)
+socket.on('qr', sokContr.qr)
+socket.on('ready', sokContr.ready)
+socket.on('notif', sokContr.notif)
 
-socket.on('qr', data => {
-  qr.style.display = 'block'
-  qr.src = data
-  //display style
+formInput.addEventListener('submit', e => {
+  e.currentTarget.submit()
+  e.preventDefault()
 })
-
-socket.on('ready', () => {
-  qr.style.display = 'none'
-  console.log('ready')
-})
-socket.on('notif', data => {
-  let notifBody = data
-  new Notification('ITICKET Notifiation', {
-    icon: 'http://localhost:3000/image/Cap.png',
-    body: notifBody
-  })
-
-  const title = data.split('*')[1]
-  const body = data.split('*')[2]
-  notif.animate(
-    [
-      { opacity: 0, scale: '0%' },
-      { opacity: 1, scale: '100%' }
-    ],
-    {
-      duration: 1000,
-      fill: 'none'
-    }
-  )
-  audio.play()
-  notif.innerHTML = /*html*/ `<span style="font-weight:bold;">${title}</span> ${body}`
+let timeout
+number.addEventListener('input', e => {
+  if (timeout) clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    console.log(e.target.value)
+  }, 500)
 })
 // socket.on('disconnect', () => {
 //   socket.close()

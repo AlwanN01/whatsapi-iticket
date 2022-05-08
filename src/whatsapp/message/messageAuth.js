@@ -3,9 +3,11 @@
 import { toDataURL } from 'qrcode'
 let msg = 'Client Connected...'
 let barcode = ''
+let ready = false
 const messageAuth = (socket, client) => {
   socket.emit('message', msg)
   socket.emit('qr', barcode)
+  socket.emit('ready', ready)
 
   client.on('qr', qr => {
     console.log('qr generate...')
@@ -22,7 +24,8 @@ const messageAuth = (socket, client) => {
     console.log('Client is ready!')
     msg = 'Client is ready!'
     barcode = ''
-    socket.emit('ready')
+    ready = true
+    socket.emit('ready', ready)
     socket.emit('message', msg)
   })
 
@@ -41,6 +44,8 @@ const messageAuth = (socket, client) => {
   client.on('disconnected', () => {
     console.log('Client disconnected!')
     msg = 'Client disconnected!'
+    ready = false
+    socket.emit('ready', ready)
     socket.emit('message', msg)
     client.destroy()
     client.initialize()

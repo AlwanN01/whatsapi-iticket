@@ -1,4 +1,4 @@
-import { client, client2 } from './config/client'
+import { client } from './config/client'
 import { Server } from 'socket.io'
 import { socket } from './socket'
 import messageCreate from './message/messageCreate'

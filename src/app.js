@@ -1,4 +1,6 @@
 import express from 'express'
+import helmet from 'helmet'
+import helmOptions from '#root/config/helmet'
 import morgan from 'morgan'
 import router from '#root/router'
 import cookieParser from 'cookie-parser'
@@ -7,6 +9,7 @@ import swaggerUI from 'swagger-ui-express'
 import swaggerDocument from '../apidocs.json'
 
 const app = express()
+app.use(helmet(helmOptions))
 app.use(cors())
 app.use(morgan('dev')) // menggunakan morgan untuk menampilkan log
 app.use(express.urlencoded({ extended: true })) // menggunakan bodyParser untuk mengambil data dari form

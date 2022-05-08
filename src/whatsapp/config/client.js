@@ -17,4 +17,4 @@ const option = {
   authStrategy: new LocalAuth()
 }
 export const client = new Client(option)
-export const client2 = new Client(option)
+// export const client2 = new Client(option)

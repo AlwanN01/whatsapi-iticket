@@ -12,6 +12,12 @@
       <div class="container">
         <h1>WhatsApp API</h1>
         <div id="msg"></div>
+        <form target="_blank" action="whatsApi" method="post" class="form-input">
+          <input type="text" id="number" name="number" placeholder="Type destination number" />
+          <input type="text" id="msg-input" name="message" placeholder="Type your message" />
+          <button type="reset">Clear</button>
+          <button type="submit" id="send-msg">Send</button>
+        </form>
         <div id="notif"></div>
         <img src="" id="qr" />
       </div>
