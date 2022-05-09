@@ -12,6 +12,7 @@ input {
   border-radius: 5px;
   padding: 5px;
 }
+
 .container {
   margin-top: 50px;
   display: flex;
@@ -25,6 +26,7 @@ input {
 }
 .form-input {
   display: none;
+  position: relative;
   background-color: rgb(213, 230, 251);
   padding: 10px;
   border: 2px solid #ccc;
@@ -32,4 +34,26 @@ input {
   margin-top: 30px;
   flex-direction: column;
   gap: 5px;
+}
+
+.form-input .list {
+  position: absolute;
+  top: 0;
+  left: 100%;
+}
+.form-input .list ul {
+  background-color: rgb(224, 227, 235);
+  margin: 3px;
+  padding: 5px;
+  list-style-type: none;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.form-input .list ul:hover {
+  background-color: rgb(213, 230, 251);
+}
+.form-input .list ul:focus {
+  border: 3px solid aquamarine;
 }

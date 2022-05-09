@@ -10,8 +10,8 @@ const option = {
       '--disable-accelerated-2d-canvas',
       '--disable-gpu',
       '--no-first-run',
-      '--no-zygote',
-      '--single-process' // <- this one doesn't work in windows
+      '--no-zygote'
+      // '--single-process' // <- this one doesn't work in windows
     ]
   },
   authStrategy: new LocalAuth()
