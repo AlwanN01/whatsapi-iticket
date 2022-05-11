@@ -71,7 +71,7 @@ export const getStatus = async nohp => {
         nohp,
       },
     })
-    return data ? `Hai *${data.nama} Status Help Anda Saat Ini *${data.status}*` : '*Nomor Anda Belum Terdaftar*'
+    return data ? `Hai *${data.nama}* Status Help Anda Saat Ini *${data.status}*` : '*Nomor Anda Belum Terdaftar*'
   } catch (err) {
     console.log(err)
   }

@@ -2,9 +2,9 @@ import WA from 'whatsapp-web.js'
 const { Client, LocalAuth } = WA
 const option = {
   puppeteer: {
-    headless: true,
+    headless: false,
     args: [
-      '--no-sandbox',
+      '--no-sandbox', // only for testing, not for production
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
       '--disable-accelerated-2d-canvas',

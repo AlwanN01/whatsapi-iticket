@@ -9,6 +9,7 @@ socket.on('message', sokContr.message)
 socket.on('qr', sokContr.qr)
 socket.on('ready', sokContr.ready)
 socket.on('notif', sokContr.notif)
+socket.on('disconnected', sokContr.disconnected)
 number.addEventListener('input', searchKontak)
 ;['click', 'keyup'].forEach(event =>
   listNumber.addEventListener(event, e => {

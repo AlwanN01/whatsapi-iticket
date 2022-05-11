@@ -41,15 +41,17 @@ const messageAuth = (socket, client) => {
     socket.emit('message', msg)
   })
 
-  client.on('disconnected', () => {
-    console.log('Client disconnected!')
-    msg = 'Client disconnected!'
-    ready = false
-    socket.emit('ready', ready)
-    socket.emit('message', msg)
-    client.destroy()
-    client.initialize()
-  })
+  // client.on('disconnected', () => {
+  //   console.log('Client disconnected!')
+  //   msg = 'Client disconnected!'
+  //   ready = false
+  //   socket.emit('ready', ready)
+  //   socket.emit('message', msg)
+  //   client.destroy()
+  //   setTimeout(() => {
+  //     client.initialize()
+  //   }, 10)
+  // })
 }
 
 export default messageAuth

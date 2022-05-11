@@ -6,12 +6,10 @@ export const socket = (socket, client) => {
 
   console.log('Masuk Page WhatsApp')
   socket.on('disconnect', () => {
-    ;+client.removeAllListeners('qr')
+    console.log('Keluar Page WhatsApp')
+    client.removeAllListeners('qr')
     client.removeAllListeners('ready')
     client.removeAllListeners('authenticated')
     client.removeAllListeners('auth_failure')
-    client.removeAllListeners('disconnected')
-
-    console.log('Keluar Page WhatsApp')
   })
 }

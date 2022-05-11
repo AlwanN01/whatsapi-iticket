@@ -4,7 +4,10 @@ import * as control from '#wa/controller'
 const messageCreate = async (msg, emit, client) => {
   try {
     const nohp = formatFromWANo(msg.from)
-
+    const chat = await msg.getChat()
+    console.log(msg.author)
+    console.log(msg.body)
+    console.log(msg.isStatus)
     //if from me
 
     if (msg.body.startsWith('!id ')) {
@@ -38,8 +41,8 @@ const messageCreate = async (msg, emit, client) => {
       }
     }
     if (msg.body.startsWith('!create ')) {
-      const [first, ...rest] = msg.body.split(' ')
-      const nama = rest.join(' ')
+      // const [first, ...rest] = msg.body.split(' ')
+      const nama = msg.body.slice(8)
       const message = await control.create(nohp, nama)
       msg.reply(replace(message))
     }
@@ -48,7 +51,7 @@ const messageCreate = async (msg, emit, client) => {
       msg.reply(replace(message))
     }
     if (msg.body === '!help') {
-      const message = await control.update(nohp, 'open')
+      const message = await control.updateStatus(nohp, 'open')
       msg.reply(replace(message))
     }
     if (msg.body === '!status') {
@@ -56,8 +59,14 @@ const messageCreate = async (msg, emit, client) => {
       msg.reply(replace(message))
     }
     if (msg.body === '!ok' && msg.fromMe) {
-      const message = await control.update(nohp, 'on progress')
+      const message = await control.updateStatus(nohp, 'on progress')
       msg.reply(replace(message))
+    }
+    if (msg.body === '!no') {
+      const chat = await msg.getChat()
+      if (chat.isGroup) {
+        msg.reply(`no anda adalah : ${msg.author}`)
+      }
     }
     // switch (msg.body === '1') {
     //   case '1':

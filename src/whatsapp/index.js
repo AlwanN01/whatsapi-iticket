@@ -10,10 +10,11 @@ const whatsapp = async server => {
   client.initialize()
   io.on('connection', sockets => socket(sockets, client))
   client.on('message_create', msg => messageCreate(msg, emit, client))
-  client.on('message_create', msg => {
-    msg.author.then(author => {
-      console.log(author)
-    })
+  client.on('disconnected', () => {
+    console.log('Client disconnected!')
+    emit('disconnected')
+    client.destroy()
+    client.initialize()
   })
 }
 

@@ -22,7 +22,7 @@ export const ready = ready => {
 }
 export const notif = data => {
   new Notification('ITICKET Notifiation', {
-    icon: 'http://localhost:3000/image/Cap.png',
+    icon: '/image/Cap.png',
     body: data,
   })
   const title = data.split('*')[1]
@@ -39,4 +39,10 @@ export const notif = data => {
   )
   audio.play()
   notifMsg.innerHTML = /*html*/ `<span style="font-weight:bold;">${title}</span> ${body}`
+}
+
+export const disconnected = () => {
+  msg.innerHTML = 'Client Disconnected!'
+  qrcode.style.display = 'none'
+  formInput.style.display = 'none'
 }

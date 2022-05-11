@@ -2,7 +2,9 @@ const listNumber = document.querySelector('.form-input').querySelector('.list')
 const form = document.querySelector('.form-input')
 let timeout
 export const searchKontak = e => {
-  if (e.target.textLength > 2) {
+  //text length
+
+  if (e.target.value.length > 2) {
     timeout && clearTimeout(timeout)
     timeout = setTimeout(async () => {
       const res = await fetch(`/kontak/${e.target.value}`)
