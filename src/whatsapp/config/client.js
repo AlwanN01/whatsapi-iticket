@@ -10,11 +10,11 @@ const option = {
       '--disable-accelerated-2d-canvas',
       '--disable-gpu',
       '--no-first-run',
-      '--no-zygote'
+      '--no-zygote',
       // '--single-process' // <- this one doesn't work in windows
-    ]
+    ],
   },
-  authStrategy: new LocalAuth()
+  authStrategy: new LocalAuth(),
 }
 export const client = new Client(option)
 // export const client2 = new Client(option)

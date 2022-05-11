@@ -14,27 +14,27 @@ export const qr = data => {
   qrcode.style.display = 'block'
   qrcode.src = data
 }
-export const ready = data => {
-  if (data) {
+export const ready = ready => {
+  if (ready) {
     formInput.style.display = 'flex'
     qrcode.style.display = 'none'
-  }
+  } else formInput.style.display = 'none'
 }
 export const notif = data => {
   new Notification('ITICKET Notifiation', {
     icon: 'http://localhost:3000/image/Cap.png',
-    body: data
+    body: data,
   })
   const title = data.split('*')[1]
   const body = data.split('*')[2]
   notifMsg.animate(
     [
       { opacity: 0, scale: '0%' },
-      { opacity: 1, scale: '100%' }
+      { opacity: 1, scale: '100%' },
     ],
     {
       duration: 1000,
-      fill: 'none'
+      fill: 'none',
     }
   )
   audio.play()

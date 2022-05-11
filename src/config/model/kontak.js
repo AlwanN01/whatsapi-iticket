@@ -7,16 +7,16 @@ const kontak = db.define(
     nohp: {
       type: sequelize.STRING,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     nama: {
       type: sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     status: {
       type: sequelize.STRING,
-      allowNull: false
-    }
+      defaultValue: 'off',
+    },
   },
   { freezeTableName: true }
 )

@@ -1,7 +1,6 @@
 import express from 'express'
 import { body } from 'express-validator'
-import { sendMessage } from '#wa/controller/sendMessage'
-
+import { whatsApi } from '#control'
 const router = express.Router()
-router.post('/', [body('number').notEmpty(), body('message').notEmpty()], sendMessage)
+router.post('/', [body('number').notEmpty(), body('message').notEmpty()], whatsApi.sendMessage)
 export default router

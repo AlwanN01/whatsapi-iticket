@@ -9,7 +9,6 @@ socket.on('message', sokContr.message)
 socket.on('qr', sokContr.qr)
 socket.on('ready', sokContr.ready)
 socket.on('notif', sokContr.notif)
-
 number.addEventListener('input', searchKontak)
 ;['click', 'keyup'].forEach(event =>
   listNumber.addEventListener(event, e => {

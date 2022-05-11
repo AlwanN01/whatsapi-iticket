@@ -1,10 +1,6 @@
 import { client } from '#wa/config/client'
 import { replace, formatFromRegNo } from '#wa/helper'
 import { validationResult } from 'express-validator'
-const checkRegisteredNumber = async number => {
-  const isRegistered = await client.isRegisteredUser(number)
-  return isRegistered
-}
 
 export const sendMessage = async (req, res) => {
   const errors = validationResult(req).formatWith(({ msg }) => msg)
@@ -14,7 +10,7 @@ export const sendMessage = async (req, res) => {
   const number = formatFromRegNo(req.body.number)
   const message = req.body.message
   console.log(number, message)
-  const isRegistered = await checkRegisteredNumber(number)
+  const isRegistered = await client.isRegisteredUser(number)
   if (!isRegistered) {
     return res.status(422).json({ status: false, errors: { number: 'Number not registered' } })
   }
