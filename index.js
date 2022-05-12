@@ -1,11 +1,15 @@
 import http from 'http'
 import app from './src/app'
 import whatsapp from '#root/whatsapp'
-import puppeteer from 'puppeteer'
+// import puppeteer from 'puppeteer'
 const port = process.env.PORT || 3000
 
 const server = http.createServer(app)
 whatsapp(server)
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}`)
+})
+
 // ;(async () => {
 //   const browser = await puppeteer.launch({
 //     headless: true,
@@ -26,7 +30,3 @@ whatsapp(server)
 //     // workaround because 'push' throws unknown permisson type but works anyways
 //   }
 // })()
-
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`)
-})

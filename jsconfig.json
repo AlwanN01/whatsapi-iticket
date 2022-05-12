@@ -4,7 +4,7 @@
     "paths": {
       "#index": ["index.js"],
       "#root/*": ["src/*"],
-      "#model": ["src/config/model"],
+      "#model": ["src/model"],
       "#db": ["src/config/database/mysql.js"],
       "#control": ["src/controller"],
       "#middleware/*": ["src/middleware/*"],

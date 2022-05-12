@@ -1,14 +1,14 @@
-import { mahasiswa, jurusan, kontak } from '#model'
+import { mahasiswa, jurusan, kontak } from '#root/model'
 import { replace, formatFromWANo } from '#wa/helper'
 import * as control from '#wa/controller'
 const messageCreate = async (msg, emit, client) => {
   try {
     const nohp = formatFromWANo(msg.from)
-    const chat = await msg.getChat()
-    console.log(msg.author)
-    console.log(msg.body)
-    console.log(msg.isStatus)
-    //if from me
+    // const chat = await msg.getChat()
+    // console.log(msg.author)
+    // console.log(msg.body)
+    // console.log(msg.isStatus)
+    // //if from me
 
     if (msg.body.startsWith('!id ')) {
       const nim = msg.body.split(' ')[1]

@@ -2,7 +2,8 @@ import WA from 'whatsapp-web.js'
 const { Client, LocalAuth } = WA
 const option = {
   puppeteer: {
-    headless: false,
+    // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    headless: true,
     args: [
       '--no-sandbox', // only for testing, not for production
       '--disable-setuid-sandbox',
