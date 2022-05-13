@@ -5,7 +5,11 @@ import whatsapp from '#root/whatsapp'
 const port = process.env.PORT || 3000
 
 const server = http.createServer(app)
-whatsapp(server)
+try {
+  whatsapp(server)
+} catch (error) {
+  console.log(error)
+}
 server.listen(port, () => {
   console.log(`Server listening on port ${port}`)
 })

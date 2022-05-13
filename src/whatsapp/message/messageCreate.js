@@ -3,13 +3,32 @@ import { replace, formatFromWANo } from '#wa/helper'
 import * as control from '#wa/controller'
 const messageCreate = async (msg, emit, client) => {
   try {
-    const nohp = formatFromWANo(msg.from)
-    // const chat = await msg.getChat()
-    // console.log(msg.author)
-    // console.log(msg.body)
-    // console.log(msg.isStatus)
-    // //if from me
+    //get date message
+    const date = new Date()
+    const day = date.getDate()
+    const month = date.getMonth() + 1
+    const year = date.getFullYear()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
+    const second = date.getSeconds()
+    const time = `${day}/${month}/${year} ${hour}:${minute}:${second}`
 
+    const nohp = formatFromWANo(msg.from)
+    const chat = await msg.getChat()
+    console.log(`author: ${msg.author}`)
+    console.log(`body: ${msg.body}`)
+    console.log(`isStatus: ${msg.isStatus}`)
+    console.log(`isGroup: ${msg.isGroup}`)
+    console.log(`time: ${time}`)
+    // //if from me
+    if (!msg.fromMe && !chat.isGroup && !msg.isStatus) {
+      msg.reply(
+        replace(`*Hello, I am ITICKET Bot.*
+    I can help you, please visit our website:
+    *https://www.rskghabibie.com/*
+    `)
+      )
+    }
     if (msg.body.startsWith('!id ')) {
       const nim = msg.body.split(' ')[1]
       const data = await mahasiswa.findOne({
