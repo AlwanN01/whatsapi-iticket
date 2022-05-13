@@ -27,8 +27,13 @@ const whatsapp = server => {
       emit('message', msg)
     })
   })
-  client.on('ready', () => {
-    console.log('Client is ready!')
+  client.on('ready', async () => {
+    let state = await client.getState()
+    if (state === 'TIMEOUT') {
+      console.log('TIMEOUT REACHED')
+    } else {
+      console.log('CLIENT READY IN STATE: ', state)
+    }
     msg = 'Client is ready!'
     barcode = ''
     ready = true
@@ -46,17 +51,29 @@ const whatsapp = server => {
     console.log('Client is not authenticated!')
     msg = 'Client is not authenticated!'
     emit('message', msg)
+    client.initialize()
   })
 
-  client.on('disconnected', () => {
-    console.log('Client disconnected!')
+  client.on('disconnected', reason => {
+    console.log(`Client disconnected! reason: ${reason}`)
     msg = 'Client disconnected!'
     ready = false
     emit('ready', ready)
     emit('message', msg)
     emit('disconnected')
-    client.destroy()
-    client.initialize()
+    client.destroy().then(() => {
+      console.log('Client is destroyed!')
+      msg = 'Client is destroyed!'
+      emit('message', msg)
+      client.initialize().then(() => {
+        console.log('Client is initialized!')
+        msg = 'Client is initialized!'
+        emit('message', msg)
+      })
+    })
+  })
+  client.on('change_state', state => {
+    console.log('Client state changed to: ' + state)
   })
 }
 

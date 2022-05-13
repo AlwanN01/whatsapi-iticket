@@ -20,6 +20,8 @@ const messageCreate = async (msg, emit, client) => {
     console.log(`isStatus: ${msg.isStatus}`)
     console.log(`isGroup: ${msg.isGroup}`)
     console.log(`time: ${time}`)
+    const prevMessage = await chat.fetchMessage({ limit: 3 })
+    console.log(prevMessage)
     // //if from me
     if (!msg.fromMe && !chat.isGroup && !msg.isStatus) {
       msg.reply(
