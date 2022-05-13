@@ -1,7 +1,7 @@
 import http from 'http'
 import app from './src/app'
 import whatsapp from '#root/whatsapp'
-// import puppeteer from 'puppeteer'
+
 const port = process.env.PORT || 3000
 
 const server = http.createServer(app)

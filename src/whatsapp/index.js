@@ -8,10 +8,10 @@ let msg = 'Client Connected...'
 let barcode = ''
 let ready = false
 
-const whatsapp = async server => {
+const whatsapp = server => {
   const io = new Server(server)
-  const emit = io.emit.bind(io) // io.sockets.emit('message', 'hello')
   client.initialize()
+  const emit = io.emit.bind(io) // io.sockets.emit('message', 'hello')
   io.on('connection', sockets => {
     sockets.emit('message', msg)
     sockets.emit('qr', barcode)
