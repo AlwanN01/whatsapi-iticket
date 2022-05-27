@@ -1,19 +1,16 @@
 import { mahasiswa, jurusan } from '#model'
 import { Op, fn, col } from 'sequelize'
-import require from '#root/utils/require'
-const { pesan } = await import('#root/pesan')
 
 export const getAll = async (req, res) => {
   try {
-    console.log(pesan)
     const data = await mahasiswa.findAll({
       attributes: { exclude: 'kd_jurusan' },
       include: [
         {
           model: jurusan,
-          attributes: ['kd_jurusan', 'nama_jurusan']
-        }
-      ]
+          attributes: ['kd_jurusan', 'nama_jurusan'],
+        },
+      ],
       // where: {
       //   [Op.or]: {
       //     nama: 'alwan',
@@ -35,13 +32,13 @@ export const getAll = async (req, res) => {
     })
     res.status(200).json({
       message: data.length ? require('#root/message.cjs') : 'data kosong',
-      data
+      data,
     })
   } catch (err) {
     res.status(500).json({
       error: {
-        message: err.message
-      }
+        message: err.message,
+      },
     })
   }
 }
@@ -55,21 +52,21 @@ export const getPagenation = async (req, res) => {
       include: [
         {
           model: jurusan,
-          attributes: ['kd_jurusan', 'nama_jurusan']
-        }
+          attributes: ['kd_jurusan', 'nama_jurusan'],
+        },
       ],
       limit,
-      offset
+      offset,
     })
     res.status(200).json({
       message: data.length ? 'data didapatkan' : 'data kosong',
-      data
+      data,
     })
   } catch (err) {
     res.status(500).json({
       error: {
-        message: err.message
-      }
+        message: err.message,
+      },
     })
   }
 }
@@ -78,18 +75,18 @@ export const getOne = async (req, res) => {
   try {
     const data = await mahasiswa.findOne({
       where: {
-        nim: req.params.key
-      }
+        nim: req.params.key,
+      },
     })
     res.status(200).json({
       message: data ? 'data didapatkan' : 'data kosong',
-      data
+      data,
     })
   } catch (err) {
     res.status(500).json({
       error: {
-        message: err.message
-      }
+        message: err.message,
+      },
     })
   }
 }
@@ -99,19 +96,19 @@ export const getSearch = async (req, res) => {
     const data = await mahasiswa.findAll({
       where: {
         nama: {
-          [Op.like]: `%${req.query.keyword}%`
-        }
-      }
+          [Op.like]: `%${req.query.keyword}%`,
+        },
+      },
     })
     res.status(200).json({
       message: data.length ? 'data didapatkan' : 'data kosong',
-      data
+      data,
     })
   } catch (err) {
     res.status(500).json({
       error: {
-        message: err.message
-      }
+        message: err.message,
+      },
     })
   }
 }
@@ -120,13 +117,13 @@ export const create = async (req, res) => {
     const data = await mahasiswa.create(req.body)
     res.status(201).json({
       message: 'data berhasil ditambahkan',
-      data
+      data,
     })
   } catch (err) {
     res.status(500).json({
       error: {
-        message: err.message
-      }
+        message: err.message,
+      },
     })
   }
 }
@@ -135,19 +132,19 @@ export const update = async (req, res) => {
   try {
     const data = await mahasiswa.update(req.body, {
       where: {
-        nim: req.params.key
-      }
+        nim: req.params.key,
+      },
     })
     console.log(data)
     res.status(200).json({
       message: data[0] ? 'data berhasil diubah' : 'data tidak ada yang diubah',
-      data
+      data,
     })
   } catch (err) {
     res.status(500).json({
       error: {
-        message: err.message
-      }
+        message: err.message,
+      },
     })
   }
 }
@@ -156,18 +153,18 @@ export const deleteOne = async (req, res) => {
   try {
     const data = await mahasiswa.destroy({
       where: {
-        nim: req.params.key
-      }
+        nim: req.params.key,
+      },
     })
     res.status(200).json({
       message: data ? 'data berhasil dihapus' : 'data yang dihapus tidak ada',
-      data
+      data,
     })
   } catch (err) {
     res.status(500).json({
       error: {
-        message: err.message
-      }
+        message: err.message,
+      },
     })
   }
 }

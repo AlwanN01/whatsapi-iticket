@@ -1,6 +1,6 @@
 import { mahasiswa, jurusan, kontak } from '#root/model'
-import { replace, formatFromWANo } from '#wa/helper'
-import * as control from '#wa/controller'
+import { replace, formatFromWANo } from '#root/app/whatsapp/helper'
+import * as control from '#root/app/whatsapp/controller'
 const messageCreate = async (msg, emit, client) => {
   try {
     //get date message

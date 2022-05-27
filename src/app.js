@@ -15,7 +15,7 @@ app.use(morgan('dev')) // menggunakan morgan untuk menampilkan log
 app.use(express.urlencoded({ extended: true })) // menggunakan bodyParser untuk mengambil data dari form
 app.use(express.json()) // menggunakan bodyParser untuk mengambil data dari json
 app.use(cookieParser())
-app.use(express.static('public', { root: '.' }))
+app.use(express.static('public', { root: '.', extensions: ['html'] }))
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use(router)
 

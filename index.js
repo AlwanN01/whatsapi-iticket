@@ -1,12 +1,13 @@
 import http from 'http'
 import app from './src/app'
-import whatsapp from '#root/whatsapp'
-
+import whatsapp from '#root/app/whatsapp'
+import ping from '#root/app/ping'
 const port = process.env.PORT || 3000
 
 const server = http.createServer(app)
 try {
   whatsapp(server)
+  ping(server)
 } catch (error) {
   console.log(error)
 }

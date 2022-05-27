@@ -1,5 +1,5 @@
-import { client } from '#wa/config/client'
-import { replace, formatFromRegNo } from '#wa/helper'
+import { client } from '#root/app/whatsapp/config/client'
+import { replace, formatFromRegNo } from '#root/app/whatsapp/helper'
 import { validationResult } from 'express-validator'
 
 export const sendMessage = async (req, res) => {

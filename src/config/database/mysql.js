@@ -1,5 +1,7 @@
 import sequelize from 'sequelize'
-
+/**
+ * @type {import('sequelize').Sequelize}
+ */
 const db = new sequelize(process.env.DB_NAME, process.env.USER, process.env.PASSWORD, {
   host: process.env.HOST,
   dialect: 'mysql',
