@@ -5,7 +5,7 @@ const Ping = server => {
   const io = new Server(server, { path: '/ping.io' })
   const emit = io.emit.bind(io) // io.sockets.emit('message', 'hello')
 
-  const frequency = 5000 // second
+  const frequency = 1000 // second
 
   let host = [
     {
