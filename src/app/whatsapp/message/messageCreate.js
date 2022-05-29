@@ -23,7 +23,7 @@ const messageCreate = async (msg, emit, client) => {
     console.log(`time: ${time}`)
     const prevMessage = await chat.fetchMessages({ limit: 3 })
     // //if from me
-    if (msg.fromMe && !chat.isGroup && !msg.isStatus) {
+    if (!chat.isGroup && !msg.isStatus) {
       switch (true) {
         case msg.body === '!status':
           {
@@ -49,7 +49,7 @@ const messageCreate = async (msg, emit, client) => {
 
         case msg.body === '!help':
           {
-            const message = await control.updateStatus(nohp, 'OPEN')
+            const message = await control.updateStatus(nohp, 'ON_REQUEST')
             msg.reply(replace(message))
           }
           break
@@ -90,12 +90,12 @@ const messageCreate = async (msg, emit, client) => {
             include: [
               {
                 model: jurusan,
-                attributes: ['kd_jurusan', 'nama_jurusan'],
-              },
+                attributes: ['kd_jurusan', 'nama_jurusan']
+              }
             ],
             where: {
-              nim,
-            },
+              nim
+            }
           })
           if (data) {
             const message = `
@@ -116,7 +116,8 @@ const messageCreate = async (msg, emit, client) => {
         default:
           {
             const status = await control.getStatusTicket(nohp)
-            if (status === 'OPEN' && msg.body !== '*Mohon Tuliskan Keterangan Permasalahan:*') {
+            console.log(status)
+            if (status === 'OPEN' && msg.body !== '*Mohon Tuliskan Keterangan Permasalahan:*' && msg.body !== '*Ticket Sudah Terdaftar*') {
               const message = await control.updateTicket(nohp, 'ON_PROGRESS', msg.body)
               if (message) msg.reply(replace(message))
             }

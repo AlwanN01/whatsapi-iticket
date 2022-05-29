@@ -6,23 +6,24 @@ const kontak = db.define(
     nohp: {
       type: sequelize.STRING,
       allowNull: false,
-      primaryKey: true,
+      primaryKey: true
     },
     nama: {
       type: sequelize.STRING,
-      allowNull: false,
+      allowNull: false
     },
     status: {
-      type: sequelize.ENUM('OPEN', 'NO_REQUEST', 'ON_PROGRESS'),
-      defaultValue: 'NO_REQUEST',
+      type: sequelize.ENUM('NO_REQUEST', 'ON_REQUEST', 'ON_PROGRESS'),
+      defaultValue: 'NO_REQUEST'
     },
     state_ticket: {
       type: sequelize.STRING,
-      defaultValue: null,
-    },
+      defaultValue: null
+    }
   },
   { timestamps: true }
 )
+// matikan async saat pertama sync(), karena table ticket belum ada.
 ;(async () => {
   try {
     const { ticket } = await import('#model')

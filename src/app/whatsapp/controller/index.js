@@ -5,14 +5,14 @@ export const create = async (nohp, nama) => {
   try {
     const exist = await kontak.findOne({
       where: {
-        nohp,
-      },
+        nohp
+      }
     })
     if (exist) return `Nomor Anda Sudah Terdaftar dengan nama *${exist.nama}*`
 
     const data = await kontak.create({
       nohp,
-      nama,
+      nama
     })
     return data ? `Nomor Anda Berhasil Ditambahkan dengan nama *${nama}*` : '*Nomor Gagal Ditambahkan*'
   } catch (err) {
@@ -24,8 +24,8 @@ export const deleteOne = async nohp => {
   try {
     const data = await kontak.destroy({
       where: {
-        nohp,
-      },
+        nohp
+      }
     })
     return data ? '*Nomor Berhasil Dihapus*' : '*Nomor Anda Belum Terdaftar*'
   } catch (err) {
@@ -36,7 +36,7 @@ export const deleteOne = async nohp => {
 export const updateStatus = async (nohp, status) => {
   let message
   switch (status) {
-    case 'OPEN':
+    case 'ON_REQUEST':
       message = `*Silahkan ketik no kategori bantuan:*
                     1 : Jaringan / Internet
                     2 : Hardware / Komputer / Monitor
@@ -56,22 +56,22 @@ export const updateStatus = async (nohp, status) => {
   try {
     const dataKontak = await kontak.findOne({
       where: {
-        nohp,
-      },
+        nohp
+      }
     })
     if (dataKontak.state_ticket && status === 'NO_REQUEST') {
       await ticket.destroy({
         where: {
-          id_ticket: dataKontak.state_ticket,
-        },
+          id_ticket: dataKontak.state_ticket
+        }
       })
     }
     const resultUpdate = await kontak.update(
       { status },
       {
         where: {
-          nohp,
-        },
+          nohp
+        }
       }
     )
     await trans.commit()
@@ -86,8 +86,8 @@ export const getStatus = async nohp => {
   try {
     const data = await kontak.findOne({
       where: {
-        nohp,
-      },
+        nohp
+      }
     })
     if (data) return
     return data.status
@@ -100,8 +100,8 @@ export const getStatusMessage = async nohp => {
   try {
     const data = await kontak.findOne({
       where: {
-        nohp,
-      },
+        nohp
+      }
     })
     return data ? `Hai *${data.nama}* Status Help Anda Saat Ini *${data.status}*` : '*Nomor Anda Belum Terdaftar*'
   } catch (err) {
@@ -129,22 +129,22 @@ export const createTickets = async (nohp, noKategori) => {
     }
     const dataKontak = await kontak.findOne({
       where: {
-        nohp,
-      },
+        nohp
+      }
     })
     if (!dataKontak) throw `Nomor ${nohp} Belum Terdaftar`
-    if (dataKontak.status !== 'OPEN') throw `Status ${nohp} Tidak Open`
+    if (dataKontak.status === 'NO_REQUEST') throw `Status ${nohp} Tidak ON_REQUEST`
     const findTickets = await ticket.findOne({
       where: {
-        id_ticket: dataKontak.state_ticket,
-      },
+        id_ticket: dataKontak.state_ticket
+      }
     })
     if (findTickets) return `*Ticket Sudah Terdaftar*`
     const id_ticket = `${kodeKategori}${new Date().getTime()}`
     const ticketData = await ticket.create({
       id_ticket,
       kategori,
-      nohp,
+      nohp
     })
     await kontak.update({ state_ticket: id_ticket }, { where: { nohp } })
     return ticketData ? '*Mohon Tuliskan Keterangan Permasalahan:*' : '*Tiket Anda Gagal Dibuat*'
@@ -157,15 +157,15 @@ export const getStatusTicket = async nohp => {
   try {
     const data = await kontak.findOne({
       where: {
-        nohp,
-      },
+        nohp
+      }
     })
     if (!data) return
-    if (data.status !== 'OPEN') return
+    if (data.status !== 'ON_REQUEST') return
     const findTickets = await ticket.findOne({
       where: {
-        id_ticket: data.state_ticket,
-      },
+        id_ticket: data.state_ticket
+      }
     })
     if (!findTickets) return
     return findTickets.status
@@ -177,14 +177,14 @@ export const updateTicket = async (nohp, status, keterangan) => {
   try {
     const dataKontak = await kontak.findOne({
       where: {
-        nohp,
-      },
+        nohp
+      }
     })
     if (!dataKontak) throw `Nomor ${nohp} Belum Terdaftar`
     const findTickets = await ticket.findOne({
       where: {
-        id_ticket: dataKontak.state_ticket,
-      },
+        id_ticket: dataKontak.state_ticket
+      }
     })
     if (!findTickets) throw `Ticket ${nohp} Tidak Terdaftar`
     const isUpdate = await ticket.update({ keterangan, status }, { where: { id_ticket: dataKontak.state_ticket } })

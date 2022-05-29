@@ -8,20 +8,21 @@ export const ticket = db.define(
     id_ticket: {
       type: sequelize.STRING,
       primaryKey: true,
-      allowNull: false,
+      allowNull: false
     },
+    nohp: sequelize.STRING,
     kategori: {
       type: sequelize.ENUM('SOFTWARE', 'HARDWARE', 'NETWORK'),
-      allowNull: false,
+      allowNull: false
     },
     status: {
       type: sequelize.ENUM('OPEN', 'ON_PROGRESS', 'PENDING', 'SOLVED', 'CLOSED'),
       allowNull: false,
-      defaultValue: 'OPEN',
+      defaultValue: 'OPEN'
     },
     keterangan: sequelize.STRING,
     responseAt: sequelize.DATE,
-    resolveAt: sequelize.DATE,
+    resolveAt: sequelize.DATE
   },
   { timestamps: true }
 )
