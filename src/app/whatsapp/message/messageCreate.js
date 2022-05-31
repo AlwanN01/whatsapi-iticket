@@ -22,7 +22,7 @@ const messageCreate = async (msg, emit, client) => {
     console.log(`isGroup: ${chat.isGroup}`)
     console.log(`time: ${time}`)
     const prevMessage = await chat.fetchMessages({ limit: 3 })
-    // //if from me
+
     if (!chat.isGroup && !msg.isStatus) {
       switch (true) {
         case msg.body === '!status':
@@ -69,7 +69,14 @@ const messageCreate = async (msg, emit, client) => {
           break
         case msg.body === '!ok' && msg.fromMe:
           {
-            const message = await control.updateStatus(nohp, 'ON_PROGRESS')
+            const message = await control.updateTicket(formatFromWANo(msg.to), 'ON_PROGRESS')
+            msg.reply(replace(message))
+          }
+          break
+
+        case msg.body === '!solved' && msg.fromMe:
+          {
+            const message = await control.updateTicket(formatFromWANo(msg.to), 'SOLVED')
             msg.reply(replace(message))
           }
           break
@@ -90,12 +97,12 @@ const messageCreate = async (msg, emit, client) => {
             include: [
               {
                 model: jurusan,
-                attributes: ['kd_jurusan', 'nama_jurusan']
-              }
+                attributes: ['kd_jurusan', 'nama_jurusan'],
+              },
             ],
             where: {
-              nim
-            }
+              nim,
+            },
           })
           if (data) {
             const message = `
@@ -116,9 +123,8 @@ const messageCreate = async (msg, emit, client) => {
         default:
           {
             const status = await control.getStatusTicket(nohp)
-            console.log(status)
-            if (status === 'OPEN' && msg.body !== '*Mohon Tuliskan Keterangan Permasalahan:*' && msg.body !== '*Ticket Sudah Terdaftar*') {
-              const message = await control.updateTicket(nohp, 'ON_PROGRESS', msg.body)
+            if (status === 'ON_WAIT' && msg.body !== '*Mohon Tuliskan Keterangan Permasalahan:*' && msg.body !== '*Ticket Sudah Terdaftar*') {
+              const message = await control.updateTicket(nohp, 'OPEN', msg.body)
               if (message) msg.reply(replace(message))
             }
           }

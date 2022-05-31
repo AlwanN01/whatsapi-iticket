@@ -1,5 +1,5 @@
 {
-  "name": "node-express",
+  "name": "rskg",
   "type": "module",
   "version": "1.0.0",
   "main": "app.js",
@@ -40,6 +40,9 @@
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.15"
+  },
+  "exports": {
+    "./db": "./src/config/database/mysql.js"
   },
   "imports": {
     "#index": "./index.js",

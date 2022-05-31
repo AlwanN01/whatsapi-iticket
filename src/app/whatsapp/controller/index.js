@@ -1,18 +1,15 @@
 import { kontak, ticket } from '#model'
 import db from '#db'
 import chalk from 'chalk'
+import moment from 'moment'
 export const create = async (nohp, nama) => {
   try {
-    const exist = await kontak.findOne({
-      where: {
-        nohp
-      }
-    })
+    const exist = await kontak.findByPk(nohp)
     if (exist) return `Nomor Anda Sudah Terdaftar dengan nama *${exist.nama}*`
 
     const data = await kontak.create({
       nohp,
-      nama
+      nama,
     })
     return data ? `Nomor Anda Berhasil Ditambahkan dengan nama *${nama}*` : '*Nomor Gagal Ditambahkan*'
   } catch (err) {
@@ -24,8 +21,8 @@ export const deleteOne = async nohp => {
   try {
     const data = await kontak.destroy({
       where: {
-        nohp
-      }
+        nohp,
+      },
     })
     return data ? '*Nomor Berhasil Dihapus*' : '*Nomor Anda Belum Terdaftar*'
   } catch (err) {
@@ -54,24 +51,20 @@ export const updateStatus = async (nohp, status) => {
   const trans = await db.transaction()
 
   try {
-    const dataKontak = await kontak.findOne({
-      where: {
-        nohp
-      }
-    })
-    if (dataKontak.state_ticket && status === 'NO_REQUEST') {
+    const dataKontak = await kontak.findByPk(nohp)
+    if (dataKontak?.stateTicket && status === 'NO_REQUEST') {
       await ticket.destroy({
         where: {
-          id_ticket: dataKontak.state_ticket
-        }
+          idTicket: dataKontak.stateTicket,
+        },
       })
     }
     const resultUpdate = await kontak.update(
       { status },
       {
         where: {
-          nohp
-        }
+          nohp,
+        },
       }
     )
     await trans.commit()
@@ -84,11 +77,7 @@ export const updateStatus = async (nohp, status) => {
 
 export const getStatus = async nohp => {
   try {
-    const data = await kontak.findOne({
-      where: {
-        nohp
-      }
-    })
+    const data = await kontak.findByPk(nohp)
     if (data) return
     return data.status
   } catch (err) {
@@ -98,11 +87,7 @@ export const getStatus = async nohp => {
 
 export const getStatusMessage = async nohp => {
   try {
-    const data = await kontak.findOne({
-      where: {
-        nohp
-      }
-    })
+    const data = await kontak.findByPk(nohp)
     return data ? `Hai *${data.nama}* Status Help Anda Saat Ini *${data.status}*` : '*Nomor Anda Belum Terdaftar*'
   } catch (err) {
     console.log(err)
@@ -127,26 +112,22 @@ export const createTickets = async (nohp, noKategori) => {
         kodeKategori = 'SOF'
         break
     }
-    const dataKontak = await kontak.findOne({
-      where: {
-        nohp
-      }
-    })
+    const dataKontak = await kontak.findByPk(nohp)
     if (!dataKontak) throw `Nomor ${nohp} Belum Terdaftar`
     if (dataKontak.status === 'NO_REQUEST') throw `Status ${nohp} Tidak ON_REQUEST`
     const findTickets = await ticket.findOne({
       where: {
-        id_ticket: dataKontak.state_ticket
-      }
+        idTicket: dataKontak.stateTicket,
+      },
     })
     if (findTickets) return `*Ticket Sudah Terdaftar*`
-    const id_ticket = `${kodeKategori}${new Date().getTime()}`
+    const idTicket = `${kodeKategori}${new Date().getTime()}`
     const ticketData = await ticket.create({
-      id_ticket,
+      idTicket,
       kategori,
-      nohp
+      nohp,
     })
-    await kontak.update({ state_ticket: id_ticket }, { where: { nohp } })
+    await kontak.update({ stateTicket: idTicket }, { where: { nohp } })
     return ticketData ? '*Mohon Tuliskan Keterangan Permasalahan:*' : '*Tiket Anda Gagal Dibuat*'
   } catch (err) {
     console.log(chalk.red(err))
@@ -155,17 +136,13 @@ export const createTickets = async (nohp, noKategori) => {
 
 export const getStatusTicket = async nohp => {
   try {
-    const data = await kontak.findOne({
-      where: {
-        nohp
-      }
-    })
+    const data = await kontak.findByPk(nohp)
     if (!data) return
     if (data.status !== 'ON_REQUEST') return
     const findTickets = await ticket.findOne({
       where: {
-        id_ticket: data.state_ticket
-      }
+        idTicket: data.stateTicket,
+      },
     })
     if (!findTickets) return
     return findTickets.status
@@ -174,23 +151,45 @@ export const getStatusTicket = async nohp => {
   }
 }
 export const updateTicket = async (nohp, status, keterangan) => {
+  status != 'OPEN' && keterangan == null
+  const responseAt = status == 'ON_PROGRESS' && moment().format('YYYY-MM-DD HH:mm:ss')
+  const resolveAt = status == 'SOLVED' && moment().format('YYYY-MM-DD HH:mm:ss')
+  let message
   try {
-    const dataKontak = await kontak.findOne({
-      where: {
-        nohp
-      }
-    })
+    const dataKontak = await kontak.findByPk(nohp)
     if (!dataKontak) throw `Nomor ${nohp} Belum Terdaftar`
     const findTickets = await ticket.findOne({
       where: {
-        id_ticket: dataKontak.state_ticket
-      }
+        idTicket: dataKontak.stateTicket,
+      },
     })
     if (!findTickets) throw `Ticket ${nohp} Tidak Terdaftar`
-    const isUpdate = await ticket.update({ keterangan, status }, { where: { id_ticket: dataKontak.state_ticket } })
-    return isUpdate[0]
-      ? `*Mohon ditunggu*, Bantuan yang anda butuhkan akan segera direspons dengan id Ticket *${findTickets.id_ticket}*`
-      : '*Permohonan Anda Gagal Diupdate*'
+    const isUpdate = await ticket.update(
+      { status, ...(keterangan && { keterangan }), ...(responseAt && { responseAt }), ...(resolveAt && { resolveAt }) },
+      { where: { idTicket: dataKontak.stateTicket } }
+    )
+    if (status == 'SOLVED') {
+      await kontak.update(
+        { status: 'NO_REQUEST', stateTicket: null },
+        {
+          where: {
+            nohp,
+          },
+        }
+      )
+    }
+    switch (status) {
+      case 'OPEN':
+        message = `*Mohon ditunggu*, Bantuan yang anda butuhkan akan segera direspons dengan id Ticket *${findTickets.idTicket}*`
+        break
+      case 'ON_PROGRESS':
+        message = 'Permohonan akan segera saya proses'
+        break
+      case 'SOLVED':
+        message = `Permohonan telah selesai dalam waktu ${moment(resolveAt).diff(moment(findTickets.responseAt), 'minutes')} menit`
+        break
+    }
+    return isUpdate[0] ? message : '*Permohonan Anda Gagal Diupdate*'
   } catch (err) {
     console.log(chalk.red(err))
   }

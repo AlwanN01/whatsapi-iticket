@@ -11,7 +11,7 @@ const db = new sequelize(process.env.DB_NAME, process.env.USER, process.env.PASS
     acquire: 30000,
     idle: 10000,
   },
-  timezone: '+07:00',
+  timezone: '+07:00', //indonesia WIB
   define: {
     timestamps: false,
     freezeTableName: true,

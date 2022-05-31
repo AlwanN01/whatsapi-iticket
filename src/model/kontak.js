@@ -6,20 +6,20 @@ const kontak = db.define(
     nohp: {
       type: sequelize.STRING,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     nama: {
       type: sequelize.STRING,
-      allowNull: false
+      allowNull: false,
     },
     status: {
       type: sequelize.ENUM('NO_REQUEST', 'ON_REQUEST', 'ON_PROGRESS'),
-      defaultValue: 'NO_REQUEST'
+      defaultValue: 'NO_REQUEST',
     },
-    state_ticket: {
+    stateTicket: {
       type: sequelize.STRING,
-      defaultValue: null
-    }
+      defaultValue: null,
+    },
   },
   { timestamps: true }
 )
@@ -27,8 +27,8 @@ const kontak = db.define(
 ;(async () => {
   try {
     const { ticket } = await import('#model')
-    ticket.hasOne(kontak, { foreignKey: 'state_ticket', onDelete: 'SET NULL' })
-    kontak.belongsTo(ticket, { foreignKey: 'state_ticket' })
+    ticket.hasOne(kontak, { foreignKey: 'stateTicket', onDelete: 'SET NULL' })
+    kontak.belongsTo(ticket, { foreignKey: 'stateTicket' })
   } catch (error) {
     console.log(error)
   }

@@ -1,22 +1,22 @@
 import { client } from './config/client'
 import { Server } from 'socket.io'
-// import { socket } from './socket'
 import { toDataURL } from 'qrcode'
 import messageCreate from './message/messageCreate'
-
+import { onConnect } from './onConnect'
 let msg = 'Client Connected...'
 let barcode = ''
 let ready = false
-
+const getData = () => ({ msg, barcode, ready })
+const setData = newData => {
+  msg = newData.msg
+  barcode = newData.barcode
+  ready = newData.ready
+}
 const whatsapp = server => {
   const io = new Server(server)
   client.initialize()
   const emit = io.emit.bind(io) // io.sockets.emit('message', 'hello')
-  io.on('connection', sockets => {
-    sockets.emit('message', msg)
-    sockets.emit('qr', barcode)
-    sockets.emit('ready', ready)
-  })
+  io.on('connection', sockets => onConnect(sockets, getData, setData))
   client.on('message_create', msg => messageCreate(msg, emit, client))
   client.on('qr', qr => {
     console.log('qr generate...')

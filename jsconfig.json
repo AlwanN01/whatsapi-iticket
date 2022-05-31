@@ -8,7 +8,8 @@
       "#db": ["src/config/database/mysql.js"],
       "#control": ["src/controller"],
       "#middleware/*": ["src/middleware/*"],
-      "#wa/*": ["src/app/whatsapp/*"]
+      "#wa/*": ["src/app/whatsapp/*"],
+      "rskg/db": ["src/config/database/mysql.js"],
     }
   },
   "exclude": ["node_modules", "**/node_modules/*"]
