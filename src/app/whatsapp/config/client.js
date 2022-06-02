@@ -1,5 +1,5 @@
 import WA from 'whatsapp-web.js'
-const { Client, LocalAuth } = WA
+const { Client, LocalAuth, NoAuth } = WA
 const option = {
   puppeteer: {
     // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -15,7 +15,7 @@ const option = {
       // '--single-process' // <- this one doesn't work in windows
     ],
   },
-  authStrategy: new LocalAuth(),
+  authStrategy: new NoAuth(),
 }
 export const client = new Client(option)
 // export const client2 = new Client(option)

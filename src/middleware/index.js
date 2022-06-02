@@ -1,2 +1,3 @@
-export { default as logStuff } from '#middleware/logStuff'
-export { default as notFound } from '#middleware/notFound'
+export { default as logStuff } from './logStuff'
+export { default as notFound } from './notFound'
+export { verifyToken } from './verifyToken'
