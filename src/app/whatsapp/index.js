@@ -19,7 +19,7 @@ const whatsapp = server => {
   io.on('connection', sockets => onConnect(sockets, getData, setData))
   client.on('message_create', msg => messageCreate(msg, emit, client))
   client.on('qr', qr => {
-    console.log('qr generate...')
+    // console.log('qr generate...')
     toDataURL(qr, (err, url) => {
       barcode = url
       msg = 'Scan QR code to login'
