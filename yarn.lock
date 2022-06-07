@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@deathabyss/wwebjs-sender@^1.89.0":
+  version "1.89.0"
+  resolved "https://registry.yarnpkg.com/@deathabyss/wwebjs-sender/-/wwebjs-sender-1.89.0.tgz#f0e37952d1627c52bec2fa3d68ba27749ea63201"
+  integrity sha512-A51J7gCzq0bkDZjkvzPL/8dIxWGs4FOwOA09l9ZYi0yVk5nzU4eniHOfNM2QISmp1WEwOovQ1GPu+yfkqXzWVA==
+  dependencies:
+    is-phone "^2.0.0"
+    whatsapp-web.js "^1.16.4"
+
 "@mapbox/node-pre-gyp@^1.0.0":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.9.tgz#09a8781a3a036151cdebbe8719d6f8b25d4058bc"
@@ -1172,6 +1180,13 @@ is-path-inside@^3.0.2:
   resolved "https://registry.npmjs.org/is-path-inside/-/is-path-inside-3.0.3.tgz"
   integrity sha512-Fd4gABb+ycGAmKou8eMftCupSir5lRxqf4aD/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==
 
+is-phone@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-phone/-/is-phone-2.0.0.tgz#c9f80d61a48197f9a19db0e4f08cdc22be0ad2ea"
+  integrity sha512-D6bx9vket4Nu7coMKEJ1Rtb8g6oo0pK0rcR2TJ1hnQSorzFnKLvjXcOGVPFhxUQWS/2lbx4gjgV3wCzqdreKvQ==
+  dependencies:
+    phone-regex "^2.0.0"
+
 is-property@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/is-property/-/is-property-1.0.2.tgz"
@@ -1683,6 +1698,11 @@ pg-connection-string@^2.5.0:
   version "2.5.0"
   resolved "https://registry.npmjs.org/pg-connection-string/-/pg-connection-string-2.5.0.tgz"
   integrity sha512-r5o/V/ORTA6TmUnyWZR9nCj1klXCO2CEKNRlVuJptZe85QuhFayC7WeMic7ndayT5IRIR0S0xFxFi2ousartlQ==
+
+phone-regex@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/phone-regex/-/phone-regex-2.1.0.tgz#255f9f8518f0196094ce21ba1dfe732277d20c0d"
+  integrity sha512-9lXTghLpr/jU6Dx9JIacAUt3Hl7qVucW8+Iqwx99dvFSO9imlB2xvY6IyT6Sw554QTtHMnhvPUygGaN5k0pv9Q==
 
 picomatch@^2.0.4, picomatch@^2.2.1:
   version "2.3.1"
@@ -2334,7 +2354,7 @@ webidl-conversions@^3.0.0:
   resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-3.0.1.tgz"
   integrity sha1-JFNCdeKnvGvnvIZhHMFq4KVlSHE=
 
-whatsapp-web.js@^1.16.6:
+whatsapp-web.js@^1.16.4, whatsapp-web.js@^1.16.6:
   version "1.16.6"
   resolved "https://registry.npmjs.org/whatsapp-web.js/-/whatsapp-web.js-1.16.6.tgz"
   integrity sha512-y60KszDx15sBWrRC/+p4tQHb0CFStcvrFuDLzaD+weBiXL22CK5/RLaHG9qLE8Z2Nsac6TV8MxiBvVssR5FSqA==
