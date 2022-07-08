@@ -2,6 +2,8 @@ import express from 'express'
 import { mahasiswa } from '#control'
 import multer from 'multer'
 import { normalize } from 'path'
+import { verifyToken } from '#middleware'
+
 const router = express.Router()
 //upload with file original name
 const storage = multer.diskStorage({
@@ -13,7 +15,7 @@ const storage = multer.diskStorage({
   }
 })
 const upload = multer({ storage: storage })
-router.get('/', mahasiswa.getAll)
+router.get('/', verifyToken, mahasiswa.getAll)
 router.get('/pagenation', mahasiswa.getPagenation)
 router.get('/search', mahasiswa.getSearch)
 router.get('/:key', mahasiswa.getOne)

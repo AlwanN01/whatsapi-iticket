@@ -10,11 +10,11 @@ import swaggerDocument from '../apidocs.json'
 import '#root/model/_sync'
 const app = express()
 app.use(helmet(helmOptions))
-app.use(cors())
+app.use(cors({ credentials: true, origin: 'http://localhost:3001' }))
 app.use(morgan('dev')) // menggunakan morgan untuk menampilkan log
+app.use(cookieParser())
 app.use(express.urlencoded({ extended: true })) // menggunakan bodyParser untuk mengambil data dari form
 app.use(express.json()) // menggunakan bodyParser untuk mengambil data dari json
-app.use(cookieParser())
 app.use(express.static('public', { root: '.', extensions: ['html'] }))
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use(router)

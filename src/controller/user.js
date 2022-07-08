@@ -33,7 +33,7 @@ export const login = async (req, res) => {
     const expiresIn = (new Date(new Date().getTime() + 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0) - new Date().getTime()).toString()
     const refreshToken = jwt.sign({ name, role }, process.env.REFRESH_TOKEN_SECRET, { expiresIn })
     await user.update({ refreshToken }, { where: { name } })
-    res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: expiresIn })
+    res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: expiresIn, sameSite: 'strict' })
     res.status(200).json({ accessToken })
   } catch (error) {
     console.log(error)

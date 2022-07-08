@@ -6,7 +6,6 @@ import { Op, fn, col } from 'sequelize'
  * @param {import('express').Response} res
  */
 export const getAll = async (req, res) => {
-  console.log(req.headers['authorization'])
   try {
     const data = await mahasiswa.findAll({
       attributes: { exclude: 'kd_jurusan' },
