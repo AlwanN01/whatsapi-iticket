@@ -6,7 +6,7 @@ import router from '#root/routes'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import swaggerUI from 'swagger-ui-express'
-import swaggerDocument from '../apidocs.json'
+// import swaggerDocument from '../apidocs.json'
 import '#root/model/_sync'
 const app = express()
 app.use(helmet(helmOptions))
@@ -16,6 +16,6 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: true })) // menggunakan bodyParser untuk mengambil data dari form
 app.use(express.json()) // menggunakan bodyParser untuk mengambil data dari json
 app.use(express.static('public', { root: '.', extensions: ['html'] }))
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+// app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use(router)
 export default app

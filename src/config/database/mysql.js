@@ -9,14 +9,14 @@ const db = new sequelize(process.env.DB_NAME, process.env.USER, process.env.PASS
     max: 5,
     min: 0,
     acquire: 30000,
-    idle: 10000,
+    idle: 10000
   },
   timezone: '+07:00', //indonesia WIB
   define: {
     timestamps: false,
-    freezeTableName: true,
+    freezeTableName: true
   },
-  logging: false, //logging: console.log query
+  logging: false //logging: console.log query
 })
 // sync db
 // db.sync().then(() => {
